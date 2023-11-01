@@ -35,6 +35,7 @@ interface ShipData {
 function Main() {
   const { loading, error, data } = useQuery(GET_VEHICLES);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [visibleShips, setVisibleShips] = useState<number>(5); 
 
   let ships: ShipData[] = [];
 
@@ -60,24 +61,35 @@ function Main() {
     return titleMatch || descriptionMatch || nationMatch || levelMatch || classMatch;
   });
 
+  const limitedShips = filteredShips.slice(0, visibleShips); 
+
   return (
     <div>
       <input
         type="text"
         placeholder="Search ships"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
+          setVisibleShips(5); 
+        }}
       />
-      {filteredShips.length > 0 ? (
-        filteredShips.map((ship) => (
+      {limitedShips.length > 0 ? (
+        limitedShips.map((ship) => (
           <ShipCard key={ship.title} ship={ship} />
         ))
       ) : (
         <p>Not found</p>
       )}
+      {filteredShips.length > visibleShips && (
+        <button
+          onClick={() => setVisibleShips(visibleShips + 5)} 
+        >
+          Load More
+        </button>
+      )}
     </div>
   );
 }
-
 
 export default Main;

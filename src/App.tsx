@@ -6,7 +6,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import './App.css'
 
 const client = new ApolloClient({
-  uri: 'url', 
+  uri: 'https://vortex.korabli.su/api/graphql/glossary/', 
   cache: new InMemoryCache(),
 });
 
