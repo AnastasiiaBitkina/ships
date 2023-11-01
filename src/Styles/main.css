@@ -1,0 +1,31 @@
+input {
+    border: 1px solid #646cff;
+    border-radius: 4px;
+    padding: 0.6em 1em;
+    font-size: 1em;
+    font-weight: 400;
+    font-family: 'Inter', 'system-ui', 'Avenir', 'Helvetica', 'Arial', sans-serif;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+    transition: border-color 0.25s;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-bottom: 30px;
+  }
+  
+  input:hover {
+    border-color: #535bf2;
+  }
+  
+  input:focus,
+  input:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+  
+  @media (prefers-color-scheme: light) {
+    input {
+      border: 1px solid #747bff;
+      background-color: #f9f9f9;
+    }
+  }
+  
