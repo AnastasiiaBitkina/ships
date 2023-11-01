@@ -1,6 +1,7 @@
 import Header from './Components/Header'
 import Main from './Components/Main'
 import Footer from './Components/Footer'
+import Background from './Components/Background';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import './App.css'
 
@@ -13,6 +14,7 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
+      <Background />
       <Header />
       <Main />
       <Footer />
