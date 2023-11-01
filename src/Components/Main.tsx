@@ -50,9 +50,15 @@ function Main() {
     ships = data.vehicles;
   }
 
-  const filteredShips = ships.filter((ship) =>
-    ship.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredShips = ships.filter((ship) => {
+    const lowerCaseSearchQuery = searchQuery.toLowerCase();
+    const titleMatch = ship.title.toLowerCase().includes(lowerCaseSearchQuery);
+    const descriptionMatch = ship.description.toLowerCase().includes(lowerCaseSearchQuery);
+    const nationMatch = ship.nation.name.toLowerCase().includes(lowerCaseSearchQuery);
+    const levelMatch = ship.level.toString().includes(searchQuery);
+    const classMatch = ship.type.title.toLowerCase().includes(lowerCaseSearchQuery);
+    return titleMatch || descriptionMatch || nationMatch || levelMatch || classMatch;
+  });
 
   return (
     <div>
@@ -72,5 +78,6 @@ function Main() {
     </div>
   );
 }
+
 
 export default Main;
