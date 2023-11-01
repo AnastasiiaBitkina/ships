@@ -1,20 +1,76 @@
-import ShipCard from "./ShipCard";
+import { useState } from 'react';
+import ShipCard from './ShipCard';
 import { useQuery } from '@apollo/client';
 import { GET_VEHICLES } from '../graphql/queries';
+import { fakeData } from './FakeData'
+import '../Styles/main.css'
+
+interface ShipData {
+  title: string;
+  description: string;
+  icons: {
+    large: string;
+    medium: string;
+  };
+  level: number;
+  type: {
+    name: string;
+    title: string;
+    icons: {
+      default: string;
+    };
+  };
+  nation: {
+    name: string;
+    title: string;
+    color: string;
+    icons: {
+      small: string;
+      medium: string;
+      large: string;
+    };
+  };
+}
 
 function Main() {
-    const { loading, error, data } = useQuery(GET_VEHICLES);
+  const { loading, error, data } = useQuery(GET_VEHICLES);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-    const shipData = data.vehicles[0];
+  let ships: ShipData[] = [];
 
-    return (
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-        <div>
-            <ShipCard ship={shipData} />
-        </div>
-    )
+  if (error) {
+    console.error(`Error: ${error.message}`);
+    console.log('Use fake data');
+    ships = fakeData.vehicles;
+  } else {
+    ships = data.vehicles;
+  }
+
+  const filteredShips = ships.filter((ship) =>
+    ship.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Search ships"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      {filteredShips.length > 0 ? (
+        filteredShips.map((ship) => (
+          <ShipCard key={ship.title} ship={ship} />
+        ))
+      ) : (
+        <p>Not found</p>
+      )}
+    </div>
+  );
 }
 
 export default Main;

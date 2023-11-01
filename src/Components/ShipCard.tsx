@@ -1,3 +1,5 @@
+import '../Styles/shipcard.css'
+
 interface ShipData {
   title: string;
   description: string;
